@@ -66,6 +66,19 @@ def add_pet_to_customer(customer, new_pet)
   customer[:pets].push(new_pet)
 end
 
+# Extensions
+
 def customer_can_afford_pet(customer, new_pet)
   return customer_cash(customer) >= new_pet[:price]
+end
+
+def sell_pet_to_customer(shop, pet, customer)
+  if pet == nil
+    return
+  elsif customer_can_afford_pet(customer, pet)
+    add_pet_to_customer(customer, pet)
+    increase_pets_sold(shop, 1)
+    remove_customer_cash(customer, pet[:price])
+    add_or_remove_cash(shop, pet[:price])
+  end
 end
